@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-evaluation-policy-v1",
+  "type": "object",
+  "required": [
+    "id",
+    "metric"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^EVAL_[A-Z0-9_]+_V[1-9][0-9]*$"
+    },
+    "metric": {
+      "enum": [
+        "mse",
+        "rank_ic",
+        "log_loss"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "fixed_comparison",
+        "nested_walk_forward"
+      ]
+    },
+    "minimum_label_coverage": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 1
+    },
+    "baseline_model_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

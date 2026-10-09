@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-model-report-v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "experiment_id",
+    "run_id",
+    "operation",
+    "compiled_plan_sha256",
+    "factor_set_id",
+    "model_ids",
+    "split_policy",
+    "fold_results",
+    "model_results",
+    "attempt_ledger",
+    "runtime",
+    "warnings",
+    "artifacts"
+  ],
+  "properties": {
+    "schema": {
+      "const": "quant-project-model-report-v1"
+    },
+    "status": {
+      "const": "success"
+    },
+    "compiled_plan_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "operation": {
+      "enum": [
+        "evaluate",
+        "inference"
+      ]
+    },
+    "model_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "fold_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "model_id",
+          "fold_id",
+          "metrics",
+          "prediction_coverage",
+          "label_coverage"
+        ]
+      }
+    },
+    "model_results": {
+      "type": "object"
+    },
+    "attempt_ledger": {
+      "type": "object",
+      "required": [
+        "attempts",
+        "fit_attempts",
+        "succeeded",
+        "failed",
+        "unfinished"
+      ]
+    },
+    "artifacts": {
+      "type": "object"
+    }
+  }
+}

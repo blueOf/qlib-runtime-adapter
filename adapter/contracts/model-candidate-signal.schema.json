@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "quant-project-model-candidate-signal-v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["signal_id", "timestamp", "symbol", "score", "rank", "percentile", "side", "research_run_id",
+    "source_model_score_id", "source_model_id", "source_factor_set_id", "source_factor_vector_id", "fold_id",
+    "model_config_sha256", "factor_set_config_sha256", "artifact_manifest_sha256", "model_payload_sha256", "compiled_plan_sha256"],
+  "properties": {
+    "signal_id": {"type": "string", "minLength": 1}, "timestamp": {"type": "string", "minLength": 1},
+    "symbol": {"type": "string", "minLength": 1}, "score": {"type": "number"},
+    "rank": {"type": "integer", "minimum": 1}, "percentile": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+    "side": {"enum": ["LONG", "SHORT"]}, "research_run_id": {"type": "string", "minLength": 1},
+    "source_model_score_id": {"type": "string", "minLength": 1},
+    "source_model_id": {"type": "string", "pattern": "^MOD_[A-Z0-9_]+_V[1-9][0-9]*$"},
+    "source_factor_set_id": {"type": "string", "pattern": "^FSET_[A-Z0-9_]+_V[1-9][0-9]*$"},
+    "source_factor_vector_id": {"type": "string", "minLength": 1}, "fold_id": {"type": "string", "minLength": 1},
+    "model_config_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "factor_set_config_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "artifact_manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "model_payload_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "compiled_plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

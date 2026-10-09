@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "quant-project-combination-catalog-v2",
+  "type": "object", "additionalProperties": false, "required": ["schema_version", "combinations"],
+  "properties": {
+    "schema_version": {"const": "quant-project-combination-catalog-v2"},
+    "combinations": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "name", "sources"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^EXP[0-9]+_V[1-9][0-9]*$"},
+        "name": {"type": "string", "minLength": 1},
+        "sources": {"type": "object", "additionalProperties": false,
+          "required": ["factor_set", "model", "signal", "strategy"],
+          "properties": {
+            "factor_set": {"type": "string", "pattern": "^FSET_[A-Z0-9_]+_V[1-9][0-9]*$"},
+            "model": {"type": "string", "pattern": "^MOD_[A-Z0-9_]+_V[1-9][0-9]*$"},
+            "signal": {"type": "string", "pattern": "^SIG_[A-Z0-9_]+_V[1-9][0-9]*$"},
+            "strategy": {"type": "string", "pattern": "^STR_[A-Z0-9_]+_V[1-9][0-9]*$"}
+          }
+        }
+      }
+    }}
+  }
+}

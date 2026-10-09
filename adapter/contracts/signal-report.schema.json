@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stock-signal-report-v1",
+  "title": "Signal evaluation report",
+  "type": "object",
+  "required": ["schema", "skill_meta", "context_snapshot", "signal_spec_snapshot", "source_snapshot", "signal_statistics", "quality", "overlap", "turnover", "concentration", "stability", "warnings", "diagnostics"],
+  "properties": {
+    "schema": {"const": "stock-signal-report-v1"},
+    "skill_meta": {"type": "object", "required": ["skill_name", "skill_version"]},
+    "context_snapshot": {"type": "object"},
+    "signal_spec_snapshot": {"type": "object", "required": ["id", "source", "selection"]},
+    "source_snapshot": {"type": "object", "required": ["factor", "factor_score_count"]},
+    "signal_statistics": {
+      "type": "object",
+      "required": ["total_signals", "timestamps_with_signal", "signals_per_timestamp_mean"],
+      "properties": {
+        "total_signals": {"type": "integer", "minimum": 0},
+        "timestamps_with_signal": {"type": "integer", "minimum": 0},
+        "signals_per_timestamp_mean": {"type": "number", "minimum": 0}
+      }
+    },
+    "quality": {"type": "object"},
+    "overlap": {"type": "object", "required": ["same_symbol_repeat_rate", "concurrent_signal_count_mean", "concurrent_signal_count_p95", "overlap_ratio"]},
+    "turnover": {"type": "object", "required": ["candidate_set_turnover", "rank_turnover", "persistence"]},
+    "concentration": {"type": "object", "required": ["top_symbol_share", "top_sector_share", "herfindahl_index"]},
+    "stability": {"type": "object", "required": ["time_blocks", "asset_groups", "regimes"]},
+    "warnings": {"type": "array", "items": {"type": "object", "required": ["code", "message"]}},
+    "diagnostics": {"type": "array"}
+  }
+}

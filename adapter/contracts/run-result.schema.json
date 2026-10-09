@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stock-qlib-run-v1",
+  "title": "Stock Qlib RunResult",
+  "type": "object",
+  "required": [
+    "schema",
+    "run",
+    "config",
+    "source",
+    "validation",
+    "quotes",
+    "screening",
+    "candidates",
+    "top",
+    "observation",
+    "artifacts"
+  ],
+  "properties": {
+    "schema": {"const": "stock-qlib-run-v1"},
+    "run": {
+      "type": "object",
+      "required": ["id", "command", "stage", "status", "tradeDate", "state", "decisionEligible", "outputDirectory"]
+    },
+    "config": {
+      "type": "object",
+      "required": ["command", "topN", "parameters", "ranking", "selection", "eligibility", "runOptions"]
+    },
+    "source": {"type": "object"},
+    "validation": {
+      "type": "object",
+      "required": ["status", "state", "decisionEligible", "requestedCount", "receivedCount", "errors"]
+    },
+    "quotes": {"type": "object"},
+    "screening": {
+      "type": "object",
+      "required": ["inputCount", "passedCount", "rejectedCount", "funnel", "rows"]
+    },
+    "candidates": {"$ref": "#/$defs/candidates"},
+    "top": {"$ref": "#/$defs/top"},
+    "observation": {"type": "object"},
+    "artifacts": {"type": "object"}
+  },
+  "$defs": {
+    "candidateRow": {
+      "type": "object",
+      "required": ["code", "candidateRank", "passedHardGates", "hardGateFailures"]
+    },
+    "topRow": {
+      "type": "object",
+      "required": ["code", "rank", "passedHardGates", "hardGateFailures"]
+    },
+    "candidates": {
+      "type": "object",
+      "required": ["count", "rows"],
+      "properties": {
+        "count": {"type": "integer", "minimum": 0},
+        "rows": {"type": "array", "items": {"$ref": "#/$defs/candidateRow"}}
+      }
+    },
+    "top": {
+      "type": "object",
+      "required": ["requested", "returned", "rows"],
+      "properties": {
+        "requested": {"type": "integer", "minimum": 0},
+        "returned": {"type": "integer", "minimum": 0},
+        "rows": {"type": "array", "items": {"$ref": "#/$defs/topRow"}}
+      }
+    }
+  }
+}

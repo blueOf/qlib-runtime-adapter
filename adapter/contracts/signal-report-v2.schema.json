@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "stock-signal-report-v2",
+  "type": "object",
+  "required": ["schema", "skill_meta", "experiment_id", "run_id", "compiled_plan_sha256", "context_snapshot",
+    "signal_spec_snapshot", "source_snapshot", "signal_statistics", "quality", "overlap", "turnover", "concentration", "stability", "warnings", "diagnostics"],
+  "properties": {
+    "schema": {"const": "stock-signal-report-v2"},
+    "compiled_plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source_snapshot": {"type": "object", "required": ["model", "factor_set", "model_score_count", "higher_is_better", "compiled_plan_sha256"],
+      "properties": {"higher_is_better": {"const": true}, "model_score_count": {"type": "integer", "minimum": 0}}},
+    "signal_statistics": {"type": "object", "required": ["total_signals", "timestamps_with_signal"]},
+    "warnings": {"type": "array"}, "diagnostics": {"type": "array"}
+  }
+}

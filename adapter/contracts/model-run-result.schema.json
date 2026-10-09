@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-model-run-result-v1",
+  "type": "object",
+  "required": [
+    "status",
+    "stage"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "success",
+        "failed",
+        "validated"
+      ]
+    },
+    "stage": {
+      "const": "model"
+    },
+    "output": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "object"
+    },
+    "registry": {
+      "type": "object"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "failed"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "code",
+          "message"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "success"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "output",
+          "summary",
+          "registry"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "validated"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "compiled_plan"
+        ]
+      }
+    }
+  ]
+}

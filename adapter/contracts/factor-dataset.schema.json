@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-factor-dataset-v1",
+  "type": "object",
+  "required": ["schema", "dataset_id", "factor_id", "sealed", "created_at", "snapshot_compatible", "context", "rows", "symbols", "artifacts", "content_sha256"],
+  "properties": {
+    "schema": {"const": "quant-project-factor-dataset-v1"},
+    "dataset_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "factor_id": {"type": "string", "minLength": 1},
+    "sealed": {"const": true},
+    "created_at": {"type": "string", "format": "date-time"},
+    "research_release": {"type": ["object", "null"]},
+    "snapshot_compatible": {"type": "boolean"},
+    "context": {"type": "object"},
+    "rows": {"type": "integer", "minimum": 0},
+    "symbols": {"type": "integer", "minimum": 0},
+    "artifacts": {"type": "object", "required": ["scores.jsonl"]},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-research-provider-v1",
+  "type": "object",
+  "required": ["schema", "research_release_id", "database", "dataset_versions", "capabilities", "manifest_hashes", "coverage"],
+  "properties": {
+    "schema": {"const": "quant-project-research-provider-v1"},
+    "research_release_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "database": {"type": "string", "minLength": 1},
+    "dataset_versions": {"type": "object"},
+    "capabilities": {"type": "object"},
+    "manifest_hashes": {
+      "type": "object",
+      "required": ["raw", "normalized"],
+      "properties": {
+        "raw": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "normalized": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "coverage": {"type": "object"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stock-strategy-robustness-v1",
+  "title": "Strategy robustness scenario report",
+  "type": "object",
+  "required": ["schema", "skill_meta", "context_snapshot", "strategy_id", "baseline", "scenario_count", "scenarios", "warnings", "errors"],
+  "properties": {
+    "schema": {"const": "stock-strategy-robustness-v1"},
+    "skill_meta": {"type": "object", "required": ["skill_name", "skill_version"]},
+    "context_snapshot": {"type": "object"},
+    "strategy_id": {"type": "string", "minLength": 1},
+    "baseline": {
+      "type": "object",
+      "required": ["performance", "trade_statistics", "cost_statistics"],
+      "properties": {
+        "performance": {"type": "object"},
+        "trade_statistics": {"type": "object"},
+        "cost_statistics": {"type": "object"}
+      }
+    },
+    "scenario_count": {"type": "integer", "minimum": 1},
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["scenario_id", "scenario", "performance", "trade_statistics", "execution_statistics", "capacity_statistics", "cost_statistics", "delta_total_return"],
+        "properties": {
+          "scenario_id": {"type": "string", "minLength": 1},
+          "scenario": {"type": "object"},
+          "performance": {"type": "object"},
+          "trade_statistics": {"type": "object"},
+          "execution_statistics": {"type": "object"},
+          "capacity_statistics": {"type": "object"},
+          "cost_statistics": {"type": "object"},
+          "delta_total_return": {"type": "number"}
+        }
+      }
+    },
+    "warnings": {"type": "array", "items": {"type": "object", "required": ["code", "message"]}},
+    "errors": {"type": "array"}
+  }
+}

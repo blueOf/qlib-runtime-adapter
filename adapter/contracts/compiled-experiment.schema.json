@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-compiled-experiment-v1",
+  "type": "object",
+  "required": ["schema", "experiment_id", "resolved_config_sha256", "factor", "signal", "strategy", "context", "data_access", "compiled_plan_sha256"],
+  "properties": {
+    "schema": {"const": "quant-project-compiled-experiment-v1"},
+    "experiment_id": {"type": "string", "pattern": "^EXP[0-9]+_V[0-9]+$"},
+    "experiment_name": {"type": "string", "minLength": 1},
+    "resolved_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "compiled_plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "factor": {"type": "object", "required": ["id", "engine", "output_field", "higher_is_better"]},
+    "signal": {"type": "object", "required": ["id", "source_factor", "builder", "selection", "ranking"]},
+    "strategy": {"type": "object", "required": ["id", "engine", "entry_timing", "portfolio", "exit", "execution", "accounting"]},
+    "context": {"type": "object"},
+    "data_access": {"type": "object", "required": ["data_mode", "as_of", "as_of_policy", "research_release_id", "dependencies", "actual_dependencies", "capabilities", "versions", "sources", "coverage", "known_biases"]}
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "quant-project-four-layer-summary-v2",
+  "type": "object",
+  "required": ["schema", "status", "stage", "experiment_id", "run_id", "compiled_plan_sha256", "resolved_config_sha256",
+    "context_snapshot", "composition", "reports", "run_evidence", "execution", "execution_status", "retention_class", "attempt_ledger"],
+  "properties": {
+    "schema": {"const": "quant-project-four-layer-summary-v2"}, "status": {"const": "success"},
+    "stage": {"enum": ["factor", "model", "signal", "strategy", "full"]},
+    "compiled_plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "composition": {"type": "object", "additionalProperties": false, "required": ["factor_set", "model", "signal", "strategy"],
+      "properties": {"factor_set": {"type": "string"}, "model": {"type": "string"}, "signal": {"type": "string"}, "strategy": {"type": "string"}}},
+    "reports": {"type": "object", "required": ["factor_report"]},
+    "execution": {"type": "object", "required": ["actual_engine", "qlib_executed"], "properties": {"qlib_executed": {"const": false}}},
+    "attempt_ledger": {"type": "object", "required": ["attempts", "fit_attempts", "succeeded", "failed", "unfinished"]}
+  },
+  "allOf": [{"if": {"properties": {"stage": {"const": "full"}}},
+    "then": {"properties": {"reports": {"required": ["factor_report", "model_report", "signal_report", "strategy_report"]}}}}]
+}

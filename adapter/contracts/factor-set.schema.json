@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-factor-set-v1",
+  "type": "object",
+  "required": [
+    "id",
+    "factors"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "quant-project-factor-set-v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^FSET_[A-Z0-9_]+_V[1-9][0-9]*$"
+    },
+    "factors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "dtype",
+          "higher_is_better",
+          "missing_policy",
+          "config_sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^FAC_[A-Z0-9_]+_V[1-9][0-9]*$"
+          },
+          "dtype": {
+            "const": "float64"
+          },
+          "higher_is_better": {
+            "type": "boolean"
+          },
+          "missing_policy": {
+            "const": "fail"
+          },
+          "config_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    }
+  }
+}

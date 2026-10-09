@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "quant-project-compiled-four-layer-v2",
+  "type": "object",
+  "required": ["schema", "experiment_id", "stage", "composition", "factor_set", "models", "signal", "execution_strategy",
+    "context", "split_policy", "runtime", "pipeline_runtime", "budget", "input_sha256", "data_sha256", "labels_sha256",
+    "prices_sha256", "corporate_actions_sha256", "groups_sha256", "regimes_sha256", "compiled_plan_sha256"],
+  "properties": {
+    "schema": {"const": "quant-project-compiled-four-layer-v2"},
+    "stage": {"enum": ["factor", "model", "signal", "strategy", "full"]},
+    "models": {"type": "array", "minItems": 1, "maxItems": 1},
+    "composition": {"type": "object", "required": ["factor_set", "model", "signal", "execution_strategy", "handoffs"]},
+    "compiled_plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

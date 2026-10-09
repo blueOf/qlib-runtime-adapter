@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stock-backtest-summary-v1",
+  "title": "Layered research backtest summary",
+  "type": "object",
+  "required": ["schema", "run_id", "experiment_id", "stage", "status", "context_snapshot", "data_access", "reports", "run_evidence", "warnings", "note"],
+  "properties": {
+    "schema": {"const": "stock-backtest-summary-v1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "experiment_id": {"type": "string", "pattern": "^EXP[0-9]+_V[1-9][0-9]*$"},
+    "experiment_name": {"type": "string", "minLength": 1},
+    "stage": {"enum": ["factor", "signal", "strategy", "full"]},
+    "status": {"enum": ["success", "failed"]},
+    "context_snapshot": {"type": "object"},
+    "evaluation_window": {
+      "type": "object",
+      "required": ["kind", "selected_session_count", "selected_row_count", "selected_start", "selected_end"]
+    },
+    "execution": {
+      "type": "object",
+      "required": ["requested_engine", "actual_engine", "qlib_executed", "qlib_runtime_config_role", "qlib_compatibility"],
+      "properties": {
+        "requested_engine": {"const": "deterministic"},
+        "actual_engine": {"enum": ["deterministic_evaluation_v1", "deterministic_event_v1"]},
+        "qlib_executed": {"const": false},
+        "qlib_runtime_config_role": {"const": "compatibility_plan"},
+        "qlib_compatibility": {
+          "type": "object",
+          "required": ["supported", "reasons"],
+          "properties": {
+            "supported": {"type": "boolean"},
+            "reasons": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "data_access": {"type": "object", "required": ["data_mode", "as_of", "as_of_policy", "research_release_id", "capabilities", "versions", "sources", "coverage", "known_biases", "dependencies", "actual_dependencies"]},
+    "reports": {"type": "object", "additionalProperties": {"type": "string"}},
+    "run_evidence": {"type": "object", "additionalProperties": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "object", "required": ["code", "message"]}},
+    "note": {"type": "string"}
+  }
+}

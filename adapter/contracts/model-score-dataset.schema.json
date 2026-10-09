@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-model-score-dataset-v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "sealed",
+    "run_id",
+    "compiled_plan_sha256",
+    "rows",
+    "scores_file",
+    "scores_sha256"
+  ],
+  "properties": {
+    "schema": {
+      "const": "quant-project-model-score-dataset-v1"
+    },
+    "sealed": {
+      "const": true
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "compiled_plan_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "rows": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "scores_file": {
+      "const": "scores.jsonl"
+    },
+    "scores_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

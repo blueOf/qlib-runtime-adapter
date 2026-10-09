@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-label-spec-v1",
+  "type": "object",
+  "required": [
+    "id",
+    "field",
+    "horizon_sessions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^LBL_[A-Z0-9_]+_V[1-9][0-9]*$"
+    },
+    "field": {
+      "type": "string",
+      "minLength": 1
+    },
+    "horizon_sessions": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "availability_field": {
+      "const": "available_at"
+    }
+  }
+}

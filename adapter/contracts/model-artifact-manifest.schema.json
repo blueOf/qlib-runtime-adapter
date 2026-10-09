@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-model-artifact-manifest-v1",
+  "title": "Quant Project model artifact manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "artifact_id",
+    "adapter_id",
+    "adapter_version",
+    "model_spec_sha256",
+    "model_identity_sha256",
+    "fit_policy",
+    "files",
+    "payload_sha256",
+    "metadata",
+    "sealed"
+  ],
+  "properties": {
+    "schema": {"const": "quant-project-model-artifact-manifest-v1"},
+    "artifact_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "adapter_id": {"type": "string", "minLength": 1},
+    "adapter_version": {"type": "string", "minLength": 1},
+    "model_spec_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "model_identity_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "fit_policy": {"enum": ["no_fit", "train_per_fold", "frozen_artifact"]},
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sha256", "bytes"],
+        "properties": {
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "bytes": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "payload_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "metadata": {"type": "object"},
+    "sealed": {"const": true},
+    "created_at": {"type": "string"},
+    "manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "root": {"type": ["string", "null"]},
+    "status": {"type": "string"}
+  }
+}

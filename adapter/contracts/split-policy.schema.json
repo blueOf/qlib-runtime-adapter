@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-split-policy-v1",
+  "type": "object",
+  "required": [
+    "id",
+    "sessions",
+    "folds",
+    "purge_sessions",
+    "embargo_sessions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^SPLIT_[A-Z0-9_]+_V[1-9][0-9]*$"
+    },
+    "sessions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "format": "date"
+      }
+    },
+    "purge_sessions": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "embargo_sessions": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "folds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "inference_window"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "train_window": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "inference_window": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "inner_folds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "train_window",
+                "inference_window"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

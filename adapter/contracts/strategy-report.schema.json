@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stock-strategy-report-v1",
+  "title": "Strategy backtest report",
+  "type": "object",
+  "required": ["schema", "skill_meta", "context_snapshot", "strategy_spec_snapshot", "signal_source_snapshot", "performance", "trade_statistics", "execution_statistics", "capacity_statistics", "cost_statistics", "curves", "diagnostics", "warnings", "errors"],
+  "properties": {
+    "schema": {"const": "stock-strategy-report-v1"},
+    "skill_meta": {"type": "object", "required": ["skill_name", "skill_version"]},
+    "context_snapshot": {"type": "object"},
+    "strategy_spec_snapshot": {"type": "object", "required": ["id", "portfolio", "entry", "exit", "execution", "accounting"]},
+    "signal_source_snapshot": {"type": "object", "required": ["signal", "candidate_count"]},
+    "performance": {"type": "object", "required": ["total_return", "max_drawdown"]},
+    "trade_statistics": {"type": "object", "required": ["trade_count", "win_rate", "profit_factor", "avg_trade_return", "avg_holding_period"]},
+    "execution_statistics": {
+      "type": "object",
+      "required": ["signal_count", "order_count", "fill_count", "rejected_order_count", "fill_rate"]
+    },
+    "capacity_statistics": {"type": "object", "required": ["blocked_by_capacity", "blocked_by_cash", "blocked_by_tradability", "blocked_by_t1", "position_occupation_ratio", "cash_utilization"]},
+    "cost_statistics": {"type": "object", "required": ["total_fees", "total_slippage_cost", "cost_to_gross_profit_ratio"]},
+    "curves": {"type": "object", "required": ["equity_curve_ref", "drawdown_curve_ref", "exposure_curve_ref"]},
+    "diagnostics": {"type": "object"},
+    "warnings": {"type": "array", "items": {"type": "object", "required": ["code", "message"]}},
+    "errors": {"type": "array"}
+  }
+}

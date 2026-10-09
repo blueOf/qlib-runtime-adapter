@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-research-run-registry-v1",
+  "type": "object",
+  "required": ["schema", "entries", "updated_at"],
+  "properties": {
+    "schema": {"const": "quant-project-research-run-registry-v1"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "experiment_id", "run_id", "stage", "status", "registered_at", "run_root", "artifacts"],
+        "properties": {
+          "key": {"type": "string", "minLength": 3},
+          "experiment_name": {"type": "string", "minLength": 1},
+          "status": {"const": "success"},
+          "artifacts": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": ["path", "role", "sha256", "bytes"],
+              "properties": {
+                "path": {"type": "string", "minLength": 1},
+                "role": {"enum": ["summary", "resolved_config", "report", "evidence", "model_score", "model_artifact"]},
+                "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "bytes": {"type": "integer", "minimum": 0}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

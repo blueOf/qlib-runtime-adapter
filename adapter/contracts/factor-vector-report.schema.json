@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "quant-project-factor-vector-report-v1",
+  "type": "object",
+  "required": ["schema", "compiled_plan_sha256", "factor_set", "input_rows", "oos_rows", "feature_order", "quality", "values", "note"],
+  "properties": {
+    "schema": {"const": "quant-project-factor-vector-report-v1"},
+    "compiled_plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "factor_set": {"type": "object", "required": ["id", "factors"]},
+    "input_rows": {"type": "integer", "minimum": 1}, "oos_rows": {"type": "integer", "minimum": 1},
+    "feature_order": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "quality": {"type": "object", "required": ["missing", "non_finite", "duplicate_keys"]},
+    "values": {"type": "object"}, "note": {"type": "string"}
+  }
+}

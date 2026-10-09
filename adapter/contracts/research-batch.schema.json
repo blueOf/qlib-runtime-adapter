@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-research-batch-result-v1",
+  "title": "Research batch result and report comparison",
+  "type": "object",
+  "required": ["schema", "batch_id", "manifest", "manifest_sha256", "config_root", "reports_root", "runs", "comparisons", "status"],
+  "properties": {
+    "schema": {"const": "quant-project-research-batch-result-v1"},
+    "batch_id": {"type": "string", "minLength": 1},
+    "manifest": {"type": "string", "minLength": 1},
+    "manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "config_root": {"type": "string", "minLength": 1},
+    "reports_root": {"type": "string", "minLength": 1},
+    "status": {"const": "success"},
+    "runs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "experiment_id", "run_id", "stage", "output", "input", "summary", "summary_sha256", "registry_key"]
+      }
+    },
+    "comparisons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "report", "left", "right", "metrics"],
+        "properties": {
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["metric", "left", "right", "delta", "equal"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

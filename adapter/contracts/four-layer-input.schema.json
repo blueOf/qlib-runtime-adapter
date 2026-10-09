@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-four-layer-input-v2",
+  "title": "Four-layer data; composition comes only from the V2 catalog",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema", "context", "split_policy", "budget", "rows"],
+  "properties": {
+    "schema": {"const": "quant-project-four-layer-input-v2"},
+    "operation": {"enum": ["evaluate", "inference"]},
+    "context": {"type": "object", "required": ["data_mode", "universe", "start", "end", "as_of"],
+      "properties": {
+        "data_mode": {"enum": ["snapshot_compatible", "point_in_time"]},
+        "universe": {"type": "string", "minLength": 1},
+        "start": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "end": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "as_of": {"type": "string", "minLength": 1},
+        "random_seed": {"type": "integer"}, "snapshot_compatible": {"type": "boolean"}
+      }
+    },
+    "split_policy": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object"}]},
+    "label": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object"}]},
+    "evaluation_policy": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "object"}]},
+    "budget": {"type": "object"},
+    "rows": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["timestamp", "symbol"]}},
+    "labels": {"type": "array", "items": {"type": "object", "required": ["timestamp", "symbol", "available_at"]}},
+    "prices": {"type": "array", "items": {"type": "object"}},
+    "corporate_actions": {"type": "array", "items": {"type": "object"}},
+    "groups": {"type": "object"}, "regimes": {"type": "object"}
+  },
+  "allOf": [{
+    "if": {"properties": {"operation": {"const": "inference"}}, "required": ["operation"]},
+    "then": {"not": {"anyOf": [{"required": ["labels"]}, {"required": ["label"]}, {"required": ["evaluation_policy"]}]}},
+    "else": {"required": ["label", "labels", "evaluation_policy"]}
+  }]
+}

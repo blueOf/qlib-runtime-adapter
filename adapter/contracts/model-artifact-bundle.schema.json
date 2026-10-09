@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-model-artifact-bundle-v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "sealed",
+    "run_id",
+    "compiled_plan_sha256",
+    "members",
+    "bundle_sha256",
+    "retention_class",
+    "execution_status"
+  ],
+  "properties": {
+    "schema": {
+      "const": "quant-project-model-artifact-bundle-v1"
+    },
+    "sealed": {
+      "const": true
+    },
+    "compiled_plan_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "bundle_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "members": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "fold_id",
+          "model_id",
+          "model_identity_sha256",
+          "artifact_id",
+          "manifest_sha256",
+          "payload_sha256"
+        ],
+        "properties": {
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "payload_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "retention_class": {
+      "enum": [
+        "reference_only",
+        "reproducible_research",
+        "executable_frozen"
+      ]
+    },
+    "execution_status": {
+      "enum": [
+        "reference_only",
+        "executable"
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-model-spec-v1",
+  "type": "object",
+  "required": [
+    "id",
+    "adapter",
+    "fit_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "quant-project-model-spec-v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^MOD_[A-Z0-9_]+_V[1-9][0-9]*$"
+    },
+    "adapter": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fit_policy": {
+      "enum": [
+        "no_fit",
+        "train_per_fold",
+        "frozen_artifact"
+      ]
+    },
+    "execution_status": {
+      "enum": [
+        "executable",
+        "reference_only"
+      ]
+    },
+    "input_factor_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "params": {
+      "type": "object"
+    },
+    "resources": {
+      "type": "object"
+    },
+    "artifact": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "target_field": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "target_contract": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-data-lineage-v1",
+  "title": "Data artifact lineage",
+  "type": "object",
+  "required": ["schema_version", "id", "version", "source", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "quant-project-data-lineage-v1"},
+    "id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "source": {"type": "object"},
+    "artifacts": {"type": "array", "items": {"type": "object", "required": ["path", "sha256"]}}
+  }
+}

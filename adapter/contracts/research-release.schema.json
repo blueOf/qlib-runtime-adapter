@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-research-release-v1",
+  "type": "object",
+  "required": ["schema", "release_id", "sealed", "created_at", "database", "provider", "database_sha256", "provider_sha256", "raw_manifest_sha256", "normalized_manifest_sha256", "source", "versions", "capabilities", "sources", "coverage", "known_biases"],
+  "properties": {
+    "schema": {"const": "quant-project-research-release-v1"},
+    "release_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+    "sealed": {"const": true},
+    "created_at": {"type": "string", "format": "date-time"},
+    "database": {"type": "string", "minLength": 1},
+    "provider": {"type": "string", "minLength": 1},
+    "database_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "provider_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "raw_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "normalized_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source": {"type": "object", "required": ["database", "provider", "database_sha256", "provider_sha256"]},
+    "versions": {"type": "object", "required": ["reference", "corporate_actions", "calendar"]},
+    "capabilities": {
+      "type": "object",
+      "required": ["point_in_time", "market_data", "fundamentals", "industry"],
+      "properties": {
+        "point_in_time": {"type": "boolean"},
+        "market_data": {"$ref": "#/$defs/datasetCapability"},
+        "fundamentals": {"$ref": "#/$defs/datasetCapability"},
+        "industry": {"$ref": "#/$defs/datasetCapability"}
+      }
+    },
+    "sources": {"type": "object"},
+    "coverage": {"type": "object"},
+    "known_biases": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "datasetCapability": {
+      "type": "object",
+      "required": ["available", "point_in_time", "data_mode", "source", "coverage"],
+      "properties": {
+        "available": {"type": "boolean"},
+        "point_in_time": {"type": "boolean"},
+        "data_mode": {"type": ["string", "null"], "enum": ["latest_snapshot", "snapshot_compatible", "point_in_time", null]},
+        "version": {"type": ["string", "array", "null"]},
+        "source": {"type": "array", "items": {"type": "string"}},
+        "coverage": {"type": "object"},
+        "reason": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# Model research optional runtime, Python 3.12.14 / Windows x64.
+# Matches the existing controlled qlib_stack/.venv_qlib environment.
+numpy==2.2.6
+scipy==1.18.1
+scikit-learn==1.9.1
+joblib==1.6.0
+threadpoolctl==3.6.0

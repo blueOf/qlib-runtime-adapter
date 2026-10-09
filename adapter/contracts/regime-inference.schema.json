@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-regime-inference-v1",
+  "title": "Point-in-time benchmark regime inference evidence",
+  "type": "object",
+  "required": ["schema", "method", "parameters", "source", "rows"],
+  "properties": {
+    "schema": {"const": "quant-project-regime-inference-v1"},
+    "method": {"const": "trailing_benchmark_momentum_volatility_v1"},
+    "parameters": {
+      "type": "object",
+      "required": ["window", "bull_threshold", "bear_threshold", "high_volatility_threshold"]
+    },
+    "source": {
+      "type": "object",
+      "required": ["observation_count", "first_timestamp", "last_timestamp"],
+      "properties": {
+        "benchmark_id": {"type": ["string", "null"]},
+        "observation_count": {"type": "integer", "minimum": 2},
+        "first_timestamp": {"type": "string", "minLength": 1},
+        "last_timestamp": {"type": "string", "minLength": 1}
+      }
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "close", "window_observations", "momentum", "annualized_volatility", "regime"],
+        "properties": {
+          "timestamp": {"type": "string", "minLength": 1},
+          "close": {"type": "number", "exclusiveMinimum": 0},
+          "window_observations": {"type": "integer", "minimum": 2},
+          "momentum": {"type": "number"},
+          "annualized_volatility": {"type": "number", "minimum": 0},
+          "regime": {"enum": ["BULL", "BEAR", "RANGE", "HIGH_VOL"]}
+        }
+      }
+    }
+  }
+}

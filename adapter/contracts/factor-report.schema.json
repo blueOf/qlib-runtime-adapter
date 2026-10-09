@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stock-factor-report-v1",
+  "title": "Factor evaluation report",
+  "type": "object",
+  "required": ["schema", "skill_meta", "context_snapshot", "factor_spec_snapshot", "label_spec_snapshot", "data_quality", "predictive_power", "quantile_analysis", "tail_analysis", "decay_analysis", "stability_analysis", "characteristics", "warnings", "diagnostics"],
+  "properties": {
+    "schema": {"const": "stock-factor-report-v1"},
+    "skill_meta": {"$ref": "#/$defs/skillMeta"},
+    "context_snapshot": {"type": "object"},
+    "factor_spec_snapshot": {"type": "object", "required": ["id", "output_field", "direction"]},
+    "label_spec_snapshot": {"type": "object", "required": ["horizons", "source"]},
+    "data_quality": {
+      "type": "object",
+      "required": ["total_rows", "valid_rows", "coverage", "missing_rate", "invalid_rate", "duplicate_count", "cross_section_count"],
+      "properties": {
+        "total_rows": {"type": "integer", "minimum": 0},
+        "valid_rows": {"type": "integer", "minimum": 0},
+        "coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "missing_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "invalid_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "duplicate_count": {"type": "integer", "minimum": 0},
+        "cross_section_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "predictive_power": {"type": "object"},
+    "quantile_analysis": {"type": "object"},
+    "tail_analysis": {"type": "object"},
+    "decay_analysis": {"type": "object", "required": ["horizon_curve", "peak_horizon"]},
+    "stability_analysis": {"type": "object", "required": ["time_blocks", "asset_groups", "regimes"]},
+    "characteristics": {"type": "object", "required": ["turnover", "autocorrelation", "cross_sectional_dispersion", "concentration", "rank_persistence"]},
+    "warnings": {"type": "array", "items": {"$ref": "#/$defs/message"}},
+    "diagnostics": {"type": "array"}
+  },
+  "$defs": {
+    "skillMeta": {"type": "object", "required": ["skill_name", "skill_version"]},
+    "message": {"type": "object", "required": ["code", "message"]}
+  }
+}
