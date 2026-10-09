@@ -1,0 +1,14 @@
+{
+  "schema": "quant-project-qlib-runtime-lock-v1",
+  "python": "3.12.14",
+  "packages": {
+    "PyYAML": "6.0.3",
+    "duckdb": "1.4.3",
+    "jsonschema": "4.26.0",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "pyqlib": "0.9.7",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quant-project-qlib-runtime-v1",
+  "type": "object",
+  "required": [
+    "schema", "experiment_id", "resolved_config_sha256", "compiled_plan_sha256",
+    "adapter", "runtime", "factor", "signal", "strategy", "executor", "exchange",
+    "context", "compatibility", "qlib_runtime_config_sha256"
+  ],
+  "properties": {
+    "schema": {"const": "quant-project-qlib-runtime-v1"},
+    "experiment_id": {"type": "string", "pattern": "^EXP[0-9]+_V[0-9]+$"},
+    "resolved_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "compiled_plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "qlib_runtime_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "adapter": {"const": "quant_project.adapters.qlib.v1"},
+    "runtime": {
+      "type": "object",
+      "required": ["python_version", "qlib_version", "dependency_lock", "implementation_sha256"],
+      "properties": {
+        "python_version": {"type": "string"},
+        "qlib_version": {"type": "string"},
+        "dependency_lock": {
+          "type": "object",
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string"},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        },
+        "implementation_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "factor": {"type": "object"},
+    "signal": {"type": "object"},
+    "strategy": {
+      "type": "object",
+      "required": ["class", "module_path", "kwargs"],
+      "properties": {
+        "kwargs": {
+          "type": "object",
+          "required": ["execution"],
+          "properties": {
+            "execution": {
+              "type": "object",
+              "required": [
+                "entry", "stopPct", "takePct", "trailingPct", "holdDays",
+                "signalExit", "rankExit", "roundTripCostBps", "minimumFee",
+                "fixedSlippageBps", "maxParticipationRate", "partialFillPolicy",
+                "limitTouchPolicy", "slotWeight", "slotCount", "initialCapital",
+                "maxGrossExposure", "lotSize", "allowSameDayExit"
+              ],
+              "properties": {
+                "entry": {"type": "string"},
+                "stopPct": {"type": ["number", "null"]},
+                "takePct": {"type": ["number", "null"]},
+                "trailingPct": {"type": ["number", "null"]},
+                "holdDays": {"type": "integer"},
+                "signalExit": {"type": "boolean"},
+                "rankExit": {"type": ["integer", "null"]},
+                "roundTripCostBps": {"type": "number", "minimum": 0},
+                "minimumFee": {"type": "number", "minimum": 0},
+                "fixedSlippageBps": {"type": "number", "minimum": 0},
+                "maxParticipationRate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+                "partialFillPolicy": {"enum": ["allow", "reject"]},
+                "limitTouchPolicy": {"enum": ["block_on_touch", "allow_on_touch"]},
+                "slotWeight": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+                "slotCount": {"type": "integer", "minimum": 1},
+                "initialCapital": {"type": "number", "exclusiveMinimum": 0},
+                "maxGrossExposure": {"type": "number", "exclusiveMinimum": 0},
+                "lotSize": {"type": "integer", "minimum": 1},
+                "allowSameDayExit": {"type": "boolean"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "executor": {"type": "object", "required": ["class", "module_path", "kwargs"]},
+    "exchange": {"type": "object", "required": ["class", "module_path", "kwargs"]},
+    "context": {"type": "object"},
+    "compatibility": {
+      "type": "object",
+      "required": ["supported", "reasons"],
+      "properties": {
+        "supported": {"type": "boolean"},
+        "reasons": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
